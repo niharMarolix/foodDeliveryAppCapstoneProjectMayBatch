@@ -3,6 +3,8 @@ from django.http import JsonResponse
 from .models import *
 from django.views.decorators.csrf import csrf_exempt
 import json
+from django.core.mail import send_mail
+from django.conf import settings
 
 
 # Create your views here.
@@ -32,6 +34,13 @@ def register(request):
             else:
                 user = User.objects.create_user(username = usalname, password = passworddddd, email = esmail,address=address,isRestaurantOwner=isRestaurantOwner,isDeliveryPatner=isDeliveryPatner)
                 user.save()
+                send_mail(
+                "congratulations",
+                "Greetings and welcome to [Your Food Delivery App Name]! 🌟 We're thrilled to have you join our community of food enthusiasts who share a passion for delicious flavors and convenient dining experiences..",
+                settings.DEFAULT_FROM_EMAIL,
+                [esmail],
+                fail_silently=False,
+            )
 
                 return JsonResponse({
                     "status":"Success",
