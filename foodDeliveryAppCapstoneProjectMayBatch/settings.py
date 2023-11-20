@@ -119,3 +119,16 @@ USE_TZ = True
 STATIC_URL = 'static/'
 
 # Default primary key field type
+# https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
+
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+# settings.py
+
+# Email Configuration
+EMAIL_BACKEND = 'prasadnaidu.marolix@gmail.com'
+EMAIL_HOST = 'smtp.elasticemail.com'
+EMAIL_PORT = 2525  # use the appropriate port for your SMTP server
+EMAIL_USE_TLS = True  # set to True if your email server uses TLS
+EMAIL_HOST_USER = 'prasadnaidu.marolix@gmail.com'  # your email address
+EMAIL_HOST_PASSWORD = '4E78D1FF4B8DCCA6C37DBD4B30AE8B0C44B2'  # your email password
+DEFAULT_FROM_EMAIL = 'prasadnaidu.marolix@gmail.com'  # default sender email address
