@@ -14,7 +14,7 @@ from django.conf import settings
 def register(request):
     try:
         if request.method != "POST":
-            raise Exception("method not allowed")
+            raise Exception('method not allowed')
         
         else:
             data = json.loads(request.body)
