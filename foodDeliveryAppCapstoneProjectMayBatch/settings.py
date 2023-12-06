@@ -39,6 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'foodDeliveryFunctionalities',
+    'rest_framework',
+    'rest_framework_simplejwt'
 ]
 
 MIDDLEWARE = [
@@ -117,6 +119,12 @@ USE_I18N = True
 
 USE_TZ = True
 
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    )
+}
+
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
@@ -137,3 +145,5 @@ EMAIL_USE_TLS = True  # set to True if your email server uses TLS
 EMAIL_HOST_USER = 'saikumar.marolix29@gmail.com'  # your email address
 EMAIL_HOST_PASSWORD = '74D9B48D81534AB7C6B598ACCE7762B2575D'  # your email password
 DEFAULT_FROM_EMAIL = 'saikumar.marolix29@gmail.com'  # default sender email address
+# EMAIL_HOST_USER='abhishek@marolix.com'
+# EMAIL_HOST_PASSWORD='DDA80F2C7E688F5951F65E298BF890BD3580'

@@ -2,7 +2,6 @@ from django.shortcuts import render
 from django.http import JsonResponse
 from django.template.loader import render_to_string
 from django.core.mail import EmailMultiAlternatives
-from .models import *
 from django.views.decorators.csrf import csrf_exempt
 import json
 from django.core.mail import send_mail
@@ -13,6 +12,7 @@ from django.contrib.auth import authenticate
 import random
 from django.core.cache import cache
 from django.core.mail import send_mail
+from .models import *
 
 
 # Create your views here.
@@ -103,7 +103,7 @@ def send_otp(request):
 
     if userObjExist == False:
         return JsonResponse({
-            "status":"failes",
+            "status":"failed",
             "message":"User not registered"
         }, status = status.HTTP_404_NOT_FOUND)
     
