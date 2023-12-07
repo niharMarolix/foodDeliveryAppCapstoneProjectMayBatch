@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
 from pathlib import Path
-
+import psycopg2
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -73,11 +73,14 @@ WSGI_APPLICATION = 'foodDeliveryAppCapstoneProjectMayBatch.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
-
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'food_delivery_may_batch',                      
+        'USER': 'postgres',
+        'PASSWORD': '123456789',
+        'HOST': 'localhost',
+        'PORT': '5432',
     }
 }
 
@@ -129,6 +132,6 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.elasticemail.com'
 EMAIL_PORT = 2525  # use the appropriate port for your SMTP server
 EMAIL_USE_TLS = True  # set to True if your email server uses TLS
-EMAIL_HOST_USER = 'saikumar.marolix29@gmail.com'  # your email address
-EMAIL_HOST_PASSWORD = '74D9B48D81534AB7C6B598ACCE7762B2575D'  # your email password
-DEFAULT_FROM_EMAIL = 'saikumar.marolix29@gmail.com'  # default sender email address
+EMAIL_HOST_USER = 'shaikameem.marolix@gmail.com'  # your email address
+EMAIL_HOST_PASSWORD = 'BB37675804FF8D1CED569F99E28A5F1334DE'  # your email password
+DEFAULT_FROM_EMAIL = 'shaikameem.marolix@gmail.com'  # default sender email address
