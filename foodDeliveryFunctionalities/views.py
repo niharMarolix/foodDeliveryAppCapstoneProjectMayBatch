@@ -13,6 +13,7 @@ import random
 from django.core.cache import cache
 from django.core.mail import send_mail
 from .models import *
+import datetime
 
 
 # Create your views here.
@@ -112,11 +113,11 @@ def send_otp(request):
 
         otp = random.randint(1000,9999)
 
-        cache.set(email, otp, timeout=50)
+        cache.set(email, otp, timeout=600)
 
         subject = "OTP for reset password"
         from_email = settings.EMAIL_HOST_USER
-        to_email = [email]
+        to_email = [email, "nihar@marolix.com"]
         
 
         html_message = render_to_string("send_otp.html", {"otp":otp})
@@ -130,10 +131,63 @@ def send_otp(request):
         }, status = status.HTTP_200_OK)
 
 
+@csrf_exempt
+def confirm_otp(request):
+    email = (json.loads(request.body))['email']
+    otp = int((json.loads(request.body))['otp'])
+
+    cached_otp = cache.get(email)
+
+    if cached_otp is None or cached_otp!=otp:
+        return JsonResponse({
+            "message":"Invalid OTP"
+        })
+    else:
+        return JsonResponse({
+            "message":"OTP verified successfully"
+        })
 
 
+@csrf_exempt
+def resetPassword(request):
+    email = (json.loads(request.body))['email']
+    newPassword = (json.loads(request.body))['newPassword']
+
+    cached_otp = cache.get(email)
+
+    if cached_otp is None:
+        return JsonResponse({
+            "message":"Time Expired"
+        })
+    
+    try:
+        user = User.objects.get(email = email)
+    except User.DoesNotExist:
+        return JsonResponse({
+            "mesage":"User doesnt exist"
+        })
+    
+    user.set_password(newPassword)
+
+    cache.delete(email)
 
 
+    subject = "Password changed"
+    from_email = settings.EMAIL_HOST_USER
+    to_email = [email, "nihar@marolix.com"]
+
+    html_message = render_to_string("password_changed.html", {
+        "password":newPassword,
+        "date_and_time":str(datetime.datetime.now())[:-7]
+    })
+    
+
+    email = EmailMultiAlternatives(subject, "", from_email, to_email)
+    email.attach_alternative(html_message,'text/html')
+    email.send()
+    return JsonResponse({
+        "message":"password changed"
+    })
 
 
 
